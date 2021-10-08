@@ -35,5 +35,71 @@ firebase.initializeApp(firebaseConfig)
 }
 export default firebase.firestore();
   
+
+
+
+
+
+
+
+  checkStudentEligibilityForBookIssue = async () => {
+    const studentRef = await db
+      .collection("students")
+      .where("studentId", "==", this.state.scannedStudentId)
+      .get();
+    var isStudentEligible = "";
+    if (studentRef.docs.length == 0) {
+      this.setState({
+        scannedStudentId: "",
+        scannedBookId: ""
+      });
+      isStudentEligible = false;
+      Alert.alert("The student id doesn't exist in the database!");
+    } else {
+      studentRef.docs.map(doc => {
+        var student = doc.data();
+        if (student.numberOfBooksIssued < 2) {
+          isStudentEligible = true;
+        } else {
+          isStudentEligible = false;
+          Alert.alert("The student has already issued 2 books!");
+          this.setState({
+            scannedStudentId: "",
+            scannedBookId: ""
+          });
+        }
+      });
+    }
+
+    return isStudentEligible;
+  }
+  
+  
+  
+  
+  
+  
+  
+    checkBookEligibility = async () => {
+    const bookRef = await db
+      .collection("books")
+      .where("bookId", "==", this.state.scannedBookId)
+      .get();
+    var transactionType = "";
+    if (bookRef.docs.length == 0) {
+      transactionType = false;
+    } else {
+      bookRef.docs.map(doc => {
+        var book = doc.data();
+        if (book.bookAvailability) {
+          transactionType = "Issue";
+        } else {
+          transactionType = "Return";
+        }
+      });
+    }
+
+    return transactionType;
+  };
   
   

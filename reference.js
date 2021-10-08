@@ -103,3 +103,25 @@ export default firebase.firestore();
   };
   
   
+  checkStudentEligibilityForReturn = async () => {
+    const transactionRef = await db
+      .collection("transactions")
+      .where("bookId", "==", this.state.scannedBookId)
+      .limit(1)
+      .get();
+    var isStudentEligible = "";
+    transactionRef.docs.map(doc => {
+      var lastBookTransaction = doc.data();
+      if (lastBookTransaction.studentId === this.state.scannedStudentId) {
+        isStudentEligible = true;
+      } else {
+        isStudentEligible = false;
+        Alert.alert("The book wasn't issued by this student!");
+        this.setState({
+          scannedStudentId: "",
+          scannedBookId: ""
+        });
+      }
+    });
+    return isStudentEligible;
+  };

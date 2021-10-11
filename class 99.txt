@@ -1,0 +1,39 @@
+OS MODULE
+
+#import module
+--> import os
+
+#To get system date
+--> os.system("date")
+
+#To create new folder
+--> os.mkdir("write the path")
+
+#To check the current working directory
+--> os.getcwd()  
+
+#To check if our file exists or not
+--> os.path.exists("path")  # you can use variable to store the result
+
+#To split the path name and the extention of the file
+--> os.path.splitext("path")  # you can use variable to store the result
+
+
+# To get all the files and folders present in a given path
+--> os.listdir()
+
+
+
+SHUTIL MODULE (used for high level operations)
+
+import shutil
+
+# To copy file from source to destination
+source = "write a source path name"
+destination = "specify destination path"
+dest = shutil.copy(source, destination);
+
+
+# To move a file from source folder to destination folder 
+dest = shutil.move(source, destination)
+

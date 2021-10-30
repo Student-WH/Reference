@@ -37,3 +37,30 @@ dest = shutil.copy(source, destination);
 # To move a file from source folder to destination folder 
 dest = shutil.move(source, destination)
 
+
+
+
+
+const Engine = Matter.Engine;
+const World = Matter.World;
+const Bodies = Matter.Bodies;
+
+var engine, world, rect1;
+
+function setup() {
+  createCanvas(400, 400);
+
+  engine = Engine.create();
+  world = engine.world;
+
+  var prop = {
+    isStatic: false,
+  };
+}
+
+function draw() {
+  background(0);
+
+  Engine.update(engine);
+}
+
